@@ -1,0 +1,46 @@
+{
+    "sourceFile": "assets/scripts/AudioManager.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1645941750634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645941770400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     const audioSource = audioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n     // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n-    audioSource.playOneShot(audioClip, volumeScale)\r\n+    audioSource.playOneShot(AudioClip, volumeScale)\r\n   }\r\n   // 设置音乐音量\r\n   setMusicVolume(flag: number) {\r\n     const audioSource = audioManager._audioSource!\r\n"
+                },
+                {
+                    "date": 1645941775610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { AudioClip, AudioSource, assert, warn, clamp01, resources } from 'cc'\r\n+import { AudioClip, AudioSource, assert, warn, clamp01, AudioClip, resources } from 'cc'\r\n export class audioManager {\r\n   private static _instance: audioManager\r\n   private static _audioSource?: AudioSource\r\n \r\n"
+                },
+                {
+                    "date": 1645941783825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { AudioClip, AudioSource, assert, warn, clamp01, AudioClip, resources } from 'cc'\r\n+import { AudioClip, AudioSource, assert, warn, clamp01, resources } from 'cc'\r\n export class audioManager {\r\n   private static _instance: audioManager\r\n   private static _audioSource?: AudioSource\r\n \r\n@@ -40,9 +40,9 @@\n     const audioSource = audioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n     // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n-    audioSource.playOneShot(AudioClip, volumeScale)\r\n+    audioSource.playOneShot(audioClip, volumeScale)\r\n   }\r\n   // 设置音乐音量\r\n   setMusicVolume(flag: number) {\r\n     const audioSource = audioManager._audioSource!\r\n"
+                },
+                {
+                    "date": 1645941789884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     const audioSource = audioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n     // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n-    audioSource.playOneShot(audioClip, volumeScale)\r\n+    audioSource.playOneShot(audioClip:AudioClip, volumeScale)\r\n   }\r\n   // 设置音乐音量\r\n   setMusicVolume(flag: number) {\r\n     const audioSource = audioManager._audioSource!\r\n"
+                },
+                {
+                    "date": 1645941796166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     const audioSource = audioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n     // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n-    audioSource.playOneShot(audioClip:AudioClip, volumeScale)\r\n+    audioSource.playOneShot(audioClip, volumeScale)\r\n   }\r\n   // 设置音乐音量\r\n   setMusicVolume(flag: number) {\r\n     const audioSource = audioManager._audioSource!\r\n"
+                },
+                {
+                    "date": 1645942019211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,54 +1,40 @@\n-import { AudioClip, AudioSource, assert, warn, clamp01, resources } from 'cc'\r\n-export class audioManager {\r\n-  private static _instance: audioManager\r\n+import { assert, assetManager, AudioClip, AudioSource, log } from 'cc'\r\n+\r\n+export class AudioManager {\r\n   private static _audioSource?: AudioSource\r\n+  private static _cachedAudioClipMap: Record<string, AudioClip> = {}\r\n \r\n-  static get instance() {\r\n-    if (this._instance) {\r\n-      return this._instance\r\n-    }\r\n-\r\n-    this._instance = new audioManager()\r\n-    return this._instance\r\n+  // init AudioManager in GameRoot component.\r\n+  public static init(audioSource: AudioSource) {\r\n+    log('Init AudioManager !')\r\n+    AudioManager._audioSource = audioSource\r\n   }\r\n \r\n-  /**管理器初始化*/\r\n-  init(audioSource: AudioSource) {\r\n-    audioManager._audioSource = audioSource\r\n-  }\r\n-\r\n-  /**\r\n-   * 播放音乐\r\n-   * @param {Boolean} loop 是否循环播放\r\n-   */\r\n-  playMusic(loop: boolean) {\r\n-    const audioSource = audioManager._audioSource!\r\n+  public static playMusic() {\r\n+    const audioSource = AudioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n-    audioSource.loop = loop\r\n-    if (!audioSource.playing) {\r\n-      audioSource.play()\r\n-    }\r\n+    audioSource.play()\r\n   }\r\n \r\n-  /**\r\n-   * 播放音效\r\n-   * @param {String} name 音效名称\r\n-   * @param {Number} volumeScale 播放音量倍数\r\n-   */\r\n-  playSound(name: string, volumeScale: number = 1) {\r\n-    const audioSource = audioManager._audioSource!\r\n+  public static playSound(name: string) {\r\n+    const audioSource = AudioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n-    // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n-    audioSource.playOneShot(audioClip, volumeScale)\r\n-  }\r\n-  // 设置音乐音量\r\n-  setMusicVolume(flag: number) {\r\n-    const audioSource = audioManager._audioSource!\r\n-    assert(audioSource, 'AudioManager not inited!')\r\n+    const path = `audio/sound/${name}`\r\n+    let cachedAudioClip = AudioManager._cachedAudioClipMap[path]\r\n+    if (cachedAudioClip) {\r\n+      audioSource.playOneShot(cachedAudioClip, 1)\r\n+    } else {\r\n+      assetManager.resources?.load(path, AudioClip, (err, clip) => {\r\n+        if (err) {\r\n+          console.warn(err)\r\n+          return\r\n+        }\r\n \r\n-    flag = clamp01(flag)\r\n-    audioSource.volume = flag\r\n+        AudioManager._cachedAudioClipMap[path] = clip\r\n+        audioSource.playOneShot(clip, 1)\r\n+      })\r\n+    }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1645942295674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   public static playSound(name: string) {\r\n     const audioSource = AudioManager._audioSource!\r\n     assert(audioSource, 'AudioManager not inited!')\r\n \r\n-    const path = `audio/sound/${name}`\r\n+    const path = `sound/${name}`\r\n     let cachedAudioClip = AudioManager._cachedAudioClipMap[path]\r\n     if (cachedAudioClip) {\r\n       audioSource.playOneShot(cachedAudioClip, 1)\r\n     } else {\r\n"
+                }
+            ],
+            "date": 1645941750634,
+            "name": "Commit-0",
+            "content": "import { AudioClip, AudioSource, assert, warn, clamp01, resources } from 'cc'\r\nexport class audioManager {\r\n  private static _instance: audioManager\r\n  private static _audioSource?: AudioSource\r\n\r\n  static get instance() {\r\n    if (this._instance) {\r\n      return this._instance\r\n    }\r\n\r\n    this._instance = new audioManager()\r\n    return this._instance\r\n  }\r\n\r\n  /**管理器初始化*/\r\n  init(audioSource: AudioSource) {\r\n    audioManager._audioSource = audioSource\r\n  }\r\n\r\n  /**\r\n   * 播放音乐\r\n   * @param {Boolean} loop 是否循环播放\r\n   */\r\n  playMusic(loop: boolean) {\r\n    const audioSource = audioManager._audioSource!\r\n    assert(audioSource, 'AudioManager not inited!')\r\n\r\n    audioSource.loop = loop\r\n    if (!audioSource.playing) {\r\n      audioSource.play()\r\n    }\r\n  }\r\n\r\n  /**\r\n   * 播放音效\r\n   * @param {String} name 音效名称\r\n   * @param {Number} volumeScale 播放音量倍数\r\n   */\r\n  playSound(name: string, volumeScale: number = 1) {\r\n    const audioSource = audioManager._audioSource!\r\n    assert(audioSource, 'AudioManager not inited!')\r\n\r\n    // 注意：第二个参数 “volumeScale” 是指播放音量的倍数，最终播放的音量为 “audioSource.volume * volumeScale”\r\n    audioSource.playOneShot(audioClip, volumeScale)\r\n  }\r\n  // 设置音乐音量\r\n  setMusicVolume(flag: number) {\r\n    const audioSource = audioManager._audioSource!\r\n    assert(audioSource, 'AudioManager not inited!')\r\n\r\n    flag = clamp01(flag)\r\n    audioSource.volume = flag\r\n  }\r\n}\r\n"
+        }
+    ]
+}
