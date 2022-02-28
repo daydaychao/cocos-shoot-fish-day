@@ -1,0 +1,38 @@
+{
+    "sourceFile": "assets/scripts/GameRoot.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1645941673548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645941678998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node } from 'cc'\n+import { _decorator, Component, Node, AudioSource } from 'cc'\n const { ccclass, property } = _decorator\n \n @ccclass('GameRoot')\n export class GameRoot extends Component {\n"
+                },
+                {
+                    "date": 1645941697868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node, AudioSource } from 'cc'\n+import { _decorator, Component, Node, AudioSource, assert } from 'cc'\n const { ccclass, property } = _decorator\n \n @ccclass('GameRoot')\n export class GameRoot extends Component {\n@@ -10,9 +10,9 @@\n     const audioSource = this.node.getComponent(AudioSource)!\n     assert(audioSource)\n     this._audioSource = audioSource\n     // 声明常驻根节点，该节点不会在场景切换中被销毁。目标节点必须是根节点，否则无效。\n-    game.addPersistRootNode(this.node)\n+    this.node.addPersistRootNode(this.node)\n \n     // 将节点封装到管理器中\n     audioManager.instance.init(this._audioSource)\n   }\n"
+                },
+                {
+                    "date": 1645941721443,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node, AudioSource, assert } from 'cc'\n+import { _decorator, Component, Node, AudioSource, assert,game } from 'cc'\n const { ccclass, property } = _decorator\n \n @ccclass('GameRoot')\n export class GameRoot extends Component {\n"
+                },
+                {
+                    "date": 1645941820145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-import { _decorator, Component, Node, AudioSource, assert,game } from 'cc'\n+import { _decorator, Component, Node, AudioSource, assert, game } from 'cc'\n+import { audioManager } from './AudioManager'\n const { ccclass, property } = _decorator\n \n @ccclass('GameRoot')\n export class GameRoot extends Component {\n@@ -10,9 +11,9 @@\n     const audioSource = this.node.getComponent(AudioSource)!\n     assert(audioSource)\n     this._audioSource = audioSource\n     // 声明常驻根节点，该节点不会在场景切换中被销毁。目标节点必须是根节点，否则无效。\n-    this.node.addPersistRootNode(this.node)\n+    game.addPersistRootNode(this.node)\n \n     // 将节点封装到管理器中\n     audioManager.instance.init(this._audioSource)\n   }\n"
+                },
+                {
+                    "date": 1645942062181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { _decorator, Component, Node, AudioSource, assert, game } from 'cc'\n-import { audioManager } from './AudioManager'\n+\n const { ccclass, property } = _decorator\n \n @ccclass('GameRoot')\n export class GameRoot extends Component {\n"
+                }
+            ],
+            "date": 1645941673548,
+            "name": "Commit-0",
+            "content": "import { _decorator, Component, Node } from 'cc'\nconst { ccclass, property } = _decorator\n\n@ccclass('GameRoot')\nexport class GameRoot extends Component {\n  @property(AudioSource)\n  _audioSource: AudioSource = null!\n\n  onLoad() {\n    const audioSource = this.node.getComponent(AudioSource)!\n    assert(audioSource)\n    this._audioSource = audioSource\n    // 声明常驻根节点，该节点不会在场景切换中被销毁。目标节点必须是根节点，否则无效。\n    game.addPersistRootNode(this.node)\n\n    // 将节点封装到管理器中\n    audioManager.instance.init(this._audioSource)\n  }\n}\n"
+        }
+    ]
+}

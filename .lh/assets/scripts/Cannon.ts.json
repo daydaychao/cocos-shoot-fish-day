@@ -1,0 +1,314 @@
+{
+    "sourceFile": "assets/scripts/Cannon.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 74,
+            "patches": [
+                {
+                    "date": 1645922350133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645922359517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n+import { _decorator, Component, Node } from 'cc'\n+const { ccclass, property } = _decorator\n \n-import { _decorator, Component, Node } from 'cc';\n-const { ccclass, property } = _decorator;\n-\n /**\n  * Predefined variables\n  * Name = Cannon\n  * DateTime = Sun Feb 27 2022 08:38:58 GMT+0800 (台北標準時間)\n@@ -12,25 +11,21 @@\n  * URL = db://assets/scripts/Cannon.ts\n  * ManualUrl = https://docs.cocos.com/creator/3.4/manual/zh/\n  *\n  */\n- \n+\n @ccclass('Cannon')\n export class Cannon extends Component {\n-    // [1]\n-    // dummy = '';\n+  @property\n+target = 0\n \n-    // [2]\n-    @property\n-    serializableDummy = 0;\n+  start() {\n+    // [3]\n+  }\n \n-    start () {\n-        // [3]\n-    }\n-\n-    // update (deltaTime: number) {\n-    //     // [4]\n-    // }\n+  // update (deltaTime: number) {\n+  //     // [4]\n+  // }\n }\n \n /**\n  * [1] Class member could be defined like this.\n"
+                },
+                {
+                    "date": 1645922364725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n  */\n \n @ccclass('Cannon')\n export class Cannon extends Component {\n-  @property\n+  @property(ccNode)\n target = 0\n \n   start() {\n     // [3]\n"
+                },
+                {
+                    "date": 1645922370428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n  */\n \n @ccclass('Cannon')\n export class Cannon extends Component {\n-  @property(ccNode)\n-target = 0\n+  @property(Node)\n+  target\n \n   start() {\n     // [3]\n   }\n"
+                },
+                {
+                    "date": 1645922377698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,12 +15,11 @@\n \n @ccclass('Cannon')\n export class Cannon extends Component {\n   @property(Node)\n-  target\n+  target: Node = null\n \n   start() {\n-    // [3]\n   }\n \n   // update (deltaTime: number) {\n   //     // [4]\n"
+                },
+                {
+                    "date": 1645922407822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,22 +17,10 @@\n export class Cannon extends Component {\n   @property(Node)\n   target: Node = null\n \n-  start() {\n+  start() {}\n+\n+  update (deltaTime: number) {\n+      // [4]\n   }\n-\n-  // update (deltaTime: number) {\n-  //     // [4]\n-  // }\n }\n-\n-/**\n- * [1] Class member could be defined like this.\n- * [2] Use `property` decorator if your want the member to be serializable.\n- * [3] Your initialization goes here.\n- * [4] Your update function goes here.\n- *\n- * Learn more about scripting: https://docs.cocos.com/creator/3.4/manual/zh/scripting/\n- * Learn more about CCClass: https://docs.cocos.com/creator/3.4/manual/zh/scripting/decorator.html\n- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.4/manual/zh/scripting/life-cycle-callbacks.html\n- */\n"
+                },
+                {
+                    "date": 1645922418918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n \n   start() {}\n \n   update (deltaTime: number) {\n-      // [4]\n+      var src = this.node.getPosition()\n   }\n }\n"
+                },
+                {
+                    "date": 1645922425710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,8 @@\n \n   start() {}\n \n   update (deltaTime: number) {\n-      var src = this.node.getPosition()\n+      var src = this.node.getPosition();\n+      var \n   }\n }\n"
+                },
+                {
+                    "date": 1645922435618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   target: Node = null\n \n   start() {}\n \n-  update (deltaTime: number) {\n-      var src = this.node.getPosition();\n-      var \n+  update(deltaTime: number) {\n+    var src = this.node.getPosition()\n+    var target = this.target.getPosition()\n   }\n }\n"
+                },
+                {
+                    "date": 1645922473909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n \n   start() {}\n \n   update(deltaTime: number) {\n+    if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n   }\n }\n"
+                },
+                {
+                    "date": 1645922485777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,6 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n+    var distance = \n   }\n }\n"
+                },
+                {
+                    "date": 1645922492185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var distance = \n+    var dir = \n   }\n }\n"
+                },
+                {
+                    "date": 1645922499270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = \n+    var dir = target.sub\n   }\n }\n"
+                },
+                {
+                    "date": 1645922507900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = target.sub\n+    var dir = target.Sub\n   }\n }\n"
+                },
+                {
+                    "date": 1645922515791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var src = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = target.Sub\n+    var dir = target.subtract(src)\n   }\n }\n"
+                },
+                {
+                    "date": 1645922526656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   start() {}\n \n   update(deltaTime: number) {\n     if (!this.target) return\n-    var src = this.node.getPosition()\n+    var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(src)\n   }\n }\n"
+                },
+                {
+                    "date": 1645922538167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = target.subtract(src)\n+    var dir = target.subtract(cannon);  //目的\n   }\n }\n"
+                },
+                {
+                    "date": 1645922550453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,7 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = target.subtract(cannon);  //目的\n+    var dir = target.subtract(cannon);  //目的地與發射點的方向相減\n   }\n }\n"
+                },
+                {
+                    "date": 1645922556339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,8 @@\n   update(deltaTime: number) {\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n-    var dir = target.subtract(cannon);  //目的地與發射點的方向相減\n+    var dir = target.subtract(cannon) //目的地與發射點的方向相減\n+    \n   }\n }\n"
+                },
+                {
+                    "date": 1645922899601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,7 +24,7 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    \n+    var angle = Math.atan2()\n   }\n }\n"
+                },
+                {
+                    "date": 1645922907848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,7 +24,7 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2()\n+    var angle = Math.atan2(dir.y, dir.x)\n   }\n }\n"
+                },
+                {
+                    "date": 1645922914638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,7 +24,7 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2(dir.y, dir.x)\n+    var angle = Math.atan2(dir.y, dir.x) //計算出角度\n   }\n }\n"
+                },
+                {
+                    "date": 1645922923659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,6 +25,7 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = Math.atan2(dir.y, dir.x) //計算出角度\n+    var degrees = Math.atan2()\n   }\n }\n"
+                },
+                {
+                    "date": 1645922951269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,7 +25,7 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = Math.atan2(dir.y, dir.x) //計算出角度\n-    var degrees = Math.atan2()\n+    var degrees =angle * 180) / Math.PI //計算出角度\n   }\n }\n"
+                },
+                {
+                    "date": 1645922969851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,8 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2(dir.y, dir.x) //計算出角度\n-    var degrees =angle * 180) / Math.PI //計算出角度\n+    var r = Math.atan2(dir.y, dir.x) //弧度\n+    var degrees = (r * 180) / Math.PI //計算出角度\n   }\n }\n"
+                },
+                {
+                    "date": 1645922993005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,6 +26,8 @@\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n+\n+    this.node.angle = degrees\n   }\n }\n"
+                },
+                {
+                    "date": 1645923003236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.angle = degrees\n+    this.node.angle = degrees * -90\n   }\n }\n"
+                },
+                {
+                    "date": 1645923009069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.angle = degrees * -90\n+    this.node.angle = degrees - 90 //設定角度\n   }\n }\n"
+                },
+                {
+                    "date": 1645923034072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.angle = degrees - 90 //設定角度\n+    this.node.angle = degrees - 90 //設定角度 砲塔基於Y \n   }\n }\n"
+                },
+                {
+                    "date": 1645923052707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.angle = degrees - 90 //設定角度 砲塔基於Y \n+    this.node.angle = degrees //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923148467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n+    \n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n     this.node.angle = degrees //設定角度 砲塔基於Y\n"
+                },
+                {
+                    "date": 1645923156687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node } from 'cc'\n+import { _decorator, Component, Node, log } from 'cc'\n const { ccclass, property } = _decorator\n \n /**\n  * Predefined variables\n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    \n+    log('dir', dir)\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n     this.node.angle = degrees //設定角度 砲塔基於Y\n"
+                },
+                {
+                    "date": 1645923165531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     log('dir', dir)\n     var r = Math.atan2(dir.y, dir.x) //弧度\n+    log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n     this.node.angle = degrees //設定角度 砲塔基於Y\n   }\n"
+                },
+                {
+                    "date": 1645923178139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.angle = degrees //設定角度 砲塔基於Y\n+    this.node.transform.rotate = degrees //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923185716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.transform.rotate = degrees //設定角度 砲塔基於Y\n+    this.node.Transform.rotate.x = degrees //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923217332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.Transform.rotate.x = degrees //設定角度 砲塔基於Y\n+    this.node.setRotation = degrees //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923223451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.setRotation = degrees //設定角度 砲塔基於Y\n+    this.node.setRotation(12,3) = degrees //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923237511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.setRotation(12,3) = degrees //設定角度 砲塔基於Y\n+    this.node.setRotation(0, 0, degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923247525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.setRotation(0, 0, degrees) //設定角度 砲塔基於Y\n+    this.node.setRotation(x:0, y:0, z:degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923252643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.setRotation(x:0, y:0, z:degrees) //設定角度 砲塔基於Y\n+    this.node.setRotation(0, 0, degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923314102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n \n-    this.node.setRotation(0, 0, degrees) //設定角度 砲塔基於Y\n+    this.node.setRotation(degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923333639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,8 @@\n     log('dir', dir)\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n-\n-    this.node.setRotation(degrees) //設定角度 砲塔基於Y\n+    log('r', r)\n+    // this.node.setRotation(degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923372737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,8 @@\n     log('dir', dir)\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n-    log('r', r)\n+    log('degrees', degrees)\n     // this.node.setRotation(degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923397180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    log('dir', dir)\n+\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n"
+                },
+                {
+                    "date": 1645923407610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,12 +24,11 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-\n     var r = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n-    // this.node.setRotation(degrees) //設定角度 砲塔基於Y\n+    this.node.setRotation(degrees) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645923493440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,6 +29,8 @@\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n+\n+    his.node.quat = this.node.quat.rotateAround(this.node.quat, cc.v3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923498764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    his.node.quat = this.node.quat.rotateAround(this.node.quat, cc.v3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n+    this.node.quat = this.node.quat.rotateAround(this.node.quat, cc.v3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923522449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.quat = this.node.quat.rotateAround(this.node.quat, cc.v3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n+    this.node.quat = this.node.quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923527807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.quat = this.node.quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new cc.Quat())\n+    this.node.quat = this.node.quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923533911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node, log } from 'cc'\n+import { _decorator, Component, Node, log, Vec3, Quat } from 'cc'\n const { ccclass, property } = _decorator\n \n /**\n  * Predefined variables\n"
+                },
+                {
+                    "date": 1645923552107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.quat = this.node.quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.quat = Quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923558841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.quat = Quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.rotation = Quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923577731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.rotation = Quat.rotateAround(this.node.quat, Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.rotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923650926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node, log, Vec3, Quat } from 'cc'\n+import { _decorator, Component, Node, log, Vec3, Quat, eulerAngles } from 'cc'\n const { ccclass, property } = _decorator\n \n /**\n  * Predefined variables\n"
+                },
+                {
+                    "date": 1645923740057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { _decorator, Component, Node, log, Vec3, Quat, eulerAngles } from 'cc'\n+import { _decorator, Component, Node, log, Vec3, Quat } from 'cc'\n const { ccclass, property } = _decorator\n \n /**\n  * Predefined variables\n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.rotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.eulerAngles = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645923788219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,7 +30,7 @@\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n-    this.node.eulerAngles = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645924039778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var r = Math.atan2(dir.y, dir.x) //弧度\n+    var angle = Math.atan2(dir.y, dir.x) //弧度\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n"
+                },
+                {
+                    "date": 1645924050681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2(dir.y, dir.x) //弧度\n+    var angle = Math.atan2(dir.y, dir.x) * 180 / PI\n     log('r', r)\n     var degrees = (r * 180) / Math.PI //計算出角度\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n"
+                },
+                {
+                    "date": 1645924056653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,11 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2(dir.y, dir.x) * 180 / PI\n-    log('r', r)\n-    var degrees = (r * 180) / Math.PI //計算出角度\n+    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     log('degrees', degrees)\n     this.node.setRotation(degrees) //設定角度 砲塔基於Y\n \n     this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n"
+                },
+                {
+                    "date": 1645924062240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n-    log('degrees', degrees)\n-    this.node.setRotation(degrees) //設定角度 砲塔基於Y\n+    log('angle', angle)\n+    this.node.setRotation(angle) //設定角度 砲塔基於Y\n \n     this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645924067508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n-    log('angle', angle)\n+    log('angle', angle\n     this.node.setRotation(angle) //設定角度 砲塔基於Y\n \n     this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n"
+                },
+                {
+                    "date": 1645924075889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n-    log('angle', angle\n-    this.node.setRotation(angle) //設定角度 砲塔基於Y\n+    log('angle', angle)\n+    this.node.setRotation(Quat(angle)) //設定角度 砲塔基於Y\n \n     this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645924083529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,8 @@\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     log('angle', angle)\n-    this.node.setRotation(Quat(angle)) //設定角度 砲塔基於Y\n-\n-    this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.setRotation(new Quat(angle)) //設定角度 砲塔基於Y\n+this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n   }\n }\n"
+                },
+                {
+                    "date": 1645924121507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n+    vet quat = new Quat(angle)\n     log('angle', angle)\n-    this.node.setRotation(new Quat(angle)) //設定角度 砲塔基於Y\n-this.node.setRotation = Quat.rotateAround(this.node.rotation, new Vec3(0, 1, 0), Math.PI * 0.5, new Quat())\n+    this.node.setRotation() //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924128037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     var cannon = this.node.getPosition()\n     var target = this.target.getPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n-    vet quat = new Quat(angle)\n-    log('angle', angle)\n+    var quat = new Quat(angle)\n+    log('quat', quat)\n     this.node.setRotation() //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924195895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,13 +21,13 @@\n   start() {}\n \n   update(deltaTime: number) {\n     if (!this.target) return\n-    var cannon = this.node.getPosition()\n-    var target = this.target.getPosition()\n+    var cannon = this.node.getWorldPostion()\n+    var target = this.target.getWorldPostion()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     var quat = new Quat(angle)\n     log('quat', quat)\n-    this.node.setRotation() //設定角度 砲塔基於Y\n+    // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924270461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,12 +21,12 @@\n   start() {}\n \n   update(deltaTime: number) {\n     if (!this.target) return\n-    var cannon = this.node.getWorldPostion()\n-    var target = this.target.getWorldPostion()\n+    var cannon = this.node.getWorldPosition()\n+    var target = this.target.getWorldPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n+    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI \n     var quat = new Quat(angle)\n     log('quat', quat)\n     // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n"
+                },
+                {
+                    "date": 1645924300991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getWorldPosition()\n     var target = this.target.getWorldPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI \n+    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     var quat = new Quat(angle)\n     log('quat', quat)\n     // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n"
+                },
+                {
+                    "date": 1645924314548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getWorldPosition()\n     var target = this.target.getWorldPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n+    var angle = Math.atan2(dir.y, dir.x) * 180 - 90 / Math.PI\n     var quat = new Quat(angle)\n     log('quat', quat)\n     // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n"
+                },
+                {
+                    "date": 1645924325461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     if (!this.target) return\n     var cannon = this.node.getWorldPosition()\n     var target = this.target.getWorldPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n-    var angle = Math.atan2(dir.y, dir.x) * 180 - 90 / Math.PI\n+    var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     var quat = new Quat(angle)\n     log('quat', quat)\n     // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n"
+                },
+                {
+                    "date": 1645924336790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     var cannon = this.node.getWorldPosition()\n     var target = this.target.getWorldPosition()\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n-    var quat = new Quat(angle)\n-    log('quat', quat)\n+    // var quat = new Quat(angle)\n+    log('angle', angle)\n     // this.node.setRotation() //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924367274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     // var quat = new Quat(angle)\n     log('angle', angle)\n-    // this.node.setRotation() //設定角度 砲塔基於Y\n+    this.node.setRotation(z:) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924374287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     // var quat = new Quat(angle)\n     log('angle', angle)\n-    this.node.setRotation(z:) //設定角度 砲塔基於Y\n+    this.node.setRotation({ z: angle }) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645924384269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     var dir = target.subtract(cannon) //目的地與發射點的方向相減\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     // var quat = new Quat(angle)\n     log('angle', angle)\n-    this.node.setRotation({ x1:,y:1 z: angle }) //設定角度 砲塔基於Y\n+    this.node.setRotation({  z: angle }) //設定角度 砲塔基於Y\n   }\n }\n"
+                },
+                {
+                    "date": 1645925165719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,7 @@\n     var angle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI\n     // var quat = new Quat(angle)\n     log('angle', angle)\n     log(this.node.getRotation())\n-    this.node.angle =  //設定角度 砲塔基於Y\n+    this.node.angle = a //設定角度 砲塔基於Y\n   }\n }\n"
+                }
+            ],
+            "date": 1645922350133,
+            "name": "Commit-0",
+            "content": "\nimport { _decorator, Component, Node } from 'cc';\nconst { ccclass, property } = _decorator;\n\n/**\n * Predefined variables\n * Name = Cannon\n * DateTime = Sun Feb 27 2022 08:38:58 GMT+0800 (台北標準時間)\n * Author = daydaychao\n * FileBasename = Cannon.ts\n * FileBasenameNoExtension = Cannon\n * URL = db://assets/scripts/Cannon.ts\n * ManualUrl = https://docs.cocos.com/creator/3.4/manual/zh/\n *\n */\n \n@ccclass('Cannon')\nexport class Cannon extends Component {\n    // [1]\n    // dummy = '';\n\n    // [2]\n    @property\n    serializableDummy = 0;\n\n    start () {\n        // [3]\n    }\n\n    // update (deltaTime: number) {\n    //     // [4]\n    // }\n}\n\n/**\n * [1] Class member could be defined like this.\n * [2] Use `property` decorator if your want the member to be serializable.\n * [3] Your initialization goes here.\n * [4] Your update function goes here.\n *\n * Learn more about scripting: https://docs.cocos.com/creator/3.4/manual/zh/scripting/\n * Learn more about CCClass: https://docs.cocos.com/creator/3.4/manual/zh/scripting/decorator.html\n * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.4/manual/zh/scripting/life-cycle-callbacks.html\n */\n"
+        }
+    ]
+}
